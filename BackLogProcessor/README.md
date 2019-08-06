@@ -3,28 +3,28 @@
 This cloud function is designed to review the audit logs and capture file uploads from before the current date / time stamp to gather as much information as possible around previous uploads.
 
 # Process
-- Check if child process
-- If child
-  - Pull Audit logs for only child_thread bucket name, from StartDate
-  - Get object values:
-   - StackDriver Event ID
-   - File Name
-   - File Path
-   - Object Size
-   - Date / Time stamp
-   - Bucket Name
-   - Storage Class (`multi_regional`,`regional`,`nearline`,`coldline`)
-   - Add to Pub/Sub Queue
-  - If error
-   - Save raw data packet into Big Query Error Dataset, along with error message
-  - If success
-   - Check Time out remaining
-   - If > 15 seconds Next
-   - If < 15 seconds call another function pass along:
-     - Last processed Event Date / Time Stamp + 0.000001ms
-- If not child
-  - Get list of buckets matching filter (default all)
-  - Spawn one function per bucket with parameter of child_thread = thread bucket name, and StartDate
+* Check if child process
+* If child
+   * Pull Audit logs for only child_thread bucket name, from StartDate
+   * Get object values:
+      * StackDriver Event ID
+      * File Name
+      * File Path
+      * Object Size
+      * Date / Time stamp
+      * Bucket Name
+      * Storage Class (`multi_regional`,`regional`,`nearline`,`coldline`)
+      * Add to Pub/Sub Queue
+   * If error
+      * Save raw data packet into Big Query Error Dataset, along with error message
+   * If success
+      * Check Time out remaining
+      * If > 15 seconds Next
+      * If < 15 seconds call another function pass along:
+         * Last processed Event Date / Time Stamp + 0.000001ms
+* If not child
+   * Get list of buckets matching filter (default all)
+   * Spawn one function per bucket with parameter of child_thread = thread bucket name, and StartDate
 
 
 # Environmental Variables
