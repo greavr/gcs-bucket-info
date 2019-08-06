@@ -19,9 +19,8 @@ This cloud function is designed to respond to a Pub/Sub queue to handle a log ev
  - If value found in Big Query - Drop
 - If error
  - Save raw data packet into Big Query Error Dataset, along with error message
-- If success
- - Drop Data
- - Kill Function
+- Drop Data
+- Kill Function
 
 # Environmental Variables
 gcs_buckets = Array of buckets to gather info on. If left blank default to all buckets. Used when filtering logs
