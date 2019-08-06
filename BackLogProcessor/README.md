@@ -36,3 +36,12 @@ This cloud function is designed to review the audit logs and capture file upload
 * Solve for timeouts (May need to call another cloud Function with a date / time and bucket index to resume updates from that time)
 * Use cloud Function to call another cloud function. One cloud function per bucket
 * Work out Trigger and success notifications
+
+# Notes
+
+`gcloud beta functions deploy backlog_processor \
+ — project {PROJECTID} \
+ — entry-point main \
+ — source . \
+ — memory 128 \
+ — timeout 540s`

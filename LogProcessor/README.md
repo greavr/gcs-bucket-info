@@ -28,3 +28,12 @@ This cloud function is designed to respond to a Pub/Sub queue to handle a log ev
 
 # Notes
 * [Google Cloud Storage Triggers](https://cloud.google.com/functions/docs/calling/storage)
+
+
+`gcloud beta functions deploy log_processor \
+ — project {PROJECTID} \
+ — entry-point main \
+ — source . \
+ — trigger-topic LOGS-BUCKET \
+ — memory 128 \
+ — timeout 30s`
