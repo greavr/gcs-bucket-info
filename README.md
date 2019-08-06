@@ -41,7 +41,7 @@ Service accounts attached to each of the Cloud Functions are used to write to th
 | eventid | integer | Used to log either stack driver event id or Pub / Sub Message ID |
 | payload | string | Dump of the Event Content or Pub / Sub Message |
 | error_msg | string | Error Message caught|
-
+| date_time | datestamp | Date & Time of event|
 
 ```
 
