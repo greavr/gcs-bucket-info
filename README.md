@@ -37,6 +37,7 @@ Service accounts attached to each of the Cloud Functions are used to write to th
 | eventid | integer | Used to log either stack driver event id or Pub / Sub Message ID |
 | project_id | integer | Project ID |
 | project_name | string | Project User Friend Name |
+| event_type | string | `OBJECT_FINALIZE` or `OBJECT_METADATA_UPDATE` or `OBJECT_DELETE` or `OBJECT_ARCHIVE` |
 | bucket_name | string | GCS Bucket Name |
 | file_name | string | Name of the file |
 | file_path | string | Path of the file |
@@ -55,11 +56,11 @@ Service accounts attached to each of the Cloud Functions are used to write to th
 | date_time | datestamp | Date & Time of event|
 
 ### Notes:
-`gsutil notification create -e OBJECT_FINALIZE -f none gs://{BUCKET}`
+`gsutil notification create -f none gs://{BUCKET}`
 
 `bq mk gcs_storage_info`
 
-`bq mk —-schema eventid:integer,project_id:integer,project_name:string,bucket_name:string,file_name:string, file_path:string,file_size:integer,file_class:string,date:date,time:timestamp -t gcs_storage_info.gcs_storage_info`
+`bq mk —-schema eventid:integer,project_id:integer,project_name:string,event_type:string,bucket_name:string,file_name:string, file_path:string,file_size:integer,file_class:string,date:date,time:timestamp -t gcs_storage_info.gcs_storage_info`
 
 `bq mk —-schema eventid:integer,payload:string,error_msg:string,time:timestamp -t gcs_storage_info.gcs_storage_error`
 
