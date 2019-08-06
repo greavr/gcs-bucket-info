@@ -18,8 +18,8 @@ Creates a Dataset called `gcs_storage_info` with two table `gcs_storage_info` & 
 Service accounts attached to each of the Cloud Functions are used to write to the dataset
 
 
-### Big Query Table Schema
-####GCS_Storage_Info
+## Big Query Table Schema
+### GCS_Storage_Info
 
 | Column Name | Column Type | Description|
 | --- | --- | --- |
@@ -34,7 +34,8 @@ Service accounts attached to each of the Cloud Functions are used to write to th
 | date | date | Date of event |
 | time | timestamp | Time of the event |
 
-####GCS_Storage_Error
+### GCS_Storage_Error
+
 | Column Name | Column Type | Description|
 | --- | --- | --- |
 | eventid | integer | Used to log either stack driver event id or Pub / Sub Message ID |
