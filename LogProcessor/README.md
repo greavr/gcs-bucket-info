@@ -14,8 +14,10 @@ This cloud function is designed to respond to a Pub/Sub queue to handle a log ev
  - Date / Time stamp
  - Bucket Name
  - Storage Class (`multi_regional`,`regional`,`nearline`,`coldline`)
-- Check Pub/Sub MSG ID
- - If value not found in Big Query - Insert new row with values
+- Check StackDriver Event ID
+ - If value not found in Big Query
+   - Check if file path exists, if exists update row
+   - If file path not exists create new row
  - If value found in Big Query - Drop
 - If error
  - Save raw data packet into Big Query Error Dataset, along with error message
@@ -28,6 +30,7 @@ This cloud function is designed to respond to a Pub/Sub queue to handle a log ev
 
 # Notes
 * [Google Cloud Storage Triggers](https://cloud.google.com/functions/docs/calling/storage)
+Checks for updates using filepath. If path + file match then update the record with new values
 
 
 `gcloud beta functions deploy log_processor \
