@@ -59,25 +59,9 @@ Service accounts attached to each of the Cloud Functions are used to write to th
 
 `bq mk gcs_storage_info`
 
-`bq mk —-schema \
-eventid:integer,\
-project_id:integer,\
-project_name:string,\
-bucket_name:string,\
-file_name:string, \
-file_path:string, \
-file_size:integer,\
-file_class:string,\
-date:date,\
-time:timestamp,\
--t gcs_storage_info.gcs_storage_info`
+`bq mk —-schema eventid:integer,project_id:integer,project_name:string,bucket_name:string,file_name:string, file_path:string,file_size:integer,file_class:string,date:date,time:timestamp -t gcs_storage_info.gcs_storage_info`
 
-`bq mk —-schema \
-eventid:integer,\
-payload:string,\
-error_msg:string,\
-time:timestamp,\
--t gcs_storage_info.gcs_storage_error`
+`bq mk —-schema eventid:integer,payload:string,error_msg:string,time:timestamp -t gcs_storage_info.gcs_storage_error`
 
 
 ## Contribute
