@@ -6,13 +6,17 @@ This cloud function is designed to respond to a Pub/Sub queue to handle a log ev
 
 # Process
 - Get object values:
+ - Project ID
+ - Project Name
  - File Name
  - File Path
  - Object Size
  - Date / Time stamp
  - Bucket Name
  - Storage Class (`multi_regional`,`regional`,`nearline`,`coldline`)
-- Insert new row with values
+- Check Pub/Sub MSG ID
+ - If value not found in Big Query - Insert new row with values
+ - If value found in Big Query - Drop
 - If error
  - Save raw data packet into Big Query Error Dataset, along with error message
 - If success
