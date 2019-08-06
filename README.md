@@ -1,10 +1,21 @@
 # gcs-bucket-info
 Get bucket size and information using GCP Audit Trails, saved into Big Query, Presented Via DataStudio
 
-## Application Design
+# Application Design
 ![GCS to StackDriver Export to Pub/Sub to Cloud Function to Big Query](media/GCS%20Bucket%20Path.jpg?raw=true "Data Path")
 
+# Getting Started
+
+## Things To Consider
+
+## Google Cloud Storage (GCS)
+This is the bucket which holds the files. We will be using [GCS Audit](https://cloud.google.com/storage/docs/audit-logs) feature, along with [GCS Triggers](https://cloud.google.com/functions/docs/calling/storage) in order to build this data.
+
+## StackDriver Logging / Sync
+[Data Audit logs](https://cloud.google.com/logging/docs/audit/#data-access) events (add, delete, modify) are saved in StackDriver Audit Logs. We will create a sync (another name for export) for these events to a Pub / Sub Queue system that holds a queue of GCS Audit events to be logged.
+
 ## Pub / Sub
+Message Queue system, used to ensure single queue for processing data into Big Query. Pub/Sub guarantees [At Least Once Delivery](https://cloud.google.com/pubsub/docs/subscriber#at-least-once-delivery) so the code needs to validate that the same value is not recorded twice. Pub/Sub can be configured to use Cloud Functions as a Subscriber to the queue, and we will limit the maximum parallel processing to *20* calls. This way we do not max out the Big Query Connection.
 
 ## Cloud Functions
 Two cloud functions (`LogProcessor` and `BackLogProcessor`)
