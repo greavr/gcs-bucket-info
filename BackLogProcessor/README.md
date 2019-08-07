@@ -28,7 +28,7 @@ This cloud function is designed to review the audit logs and capture file upload
 
 
 # Parameters Variables
-`selected_gcs_buckets` = Array of buckets to gather info on. If left blank default to all buckets.
+`selected_gcs_buckets` = Comma seperated array of buckets to gather info on. If left blank default to all buckets.
 `start_date` = Sets the start date to review logs newer than this date / time. Default is all history
 `child_thread` = Bucket name to search for
 
