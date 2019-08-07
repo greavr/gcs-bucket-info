@@ -8,19 +8,17 @@
 # - child_thread
 # - start_date
 # Envionmental Variables:
-# -filtered_gcs_buckets
+# -selected_gcs_buckets
 #######################
 
 import os
 from google.cloud import pubsub_v1      # Pub/Sub
 from google.cloud import storage        # GCS
-import requests                         # Used to curl
 from google.cloud import monitoring_v3  # Used for StackDriver Audit
+import requests                         # Used to curl
 import json                             # Used to send & receive data
+import datetime                         # Used for time filtering
 
-
-# Build Clound Function Path
-function_url = "https://" + os.environ(FUNCTION_REGION) + "." + os.environ(GCP_PROJECT) + ".cloudfunctions.net/" + os.environ(FUNCTION_NAME)
 
 def Master():
     # List all buckets within scope:
@@ -29,20 +27,34 @@ def Master():
 
     # Call Functions
     for bucket in buckets:
-        # Build Curl request
-        # TODO: Solve for parralization
-        headers = {(}'Content-Type':'application/json'}
-        data = {"child_thread":bucket.name}
-        res = requests.post(function_url, json=data, headers=headers)
+        # Only call if bucket name matches
+        if bucket.name in os.environ(selected_gcs_buckets):
+            # Build Curl request
+            CallChild(bucket.name)
+
+def CallChild(BucketName, AuditStartTime = datetime.datetime.now()):
+    # Function used to may a curl request to trigger a copy of this function
+    # TODO : Solve for Parallel
+
+    # Build Clound Function URL Path
+    function_url = "https://" + os.environ(FUNCTION_REGION) + "." + os.environ(GCP_PROJECT) + ".cloudfunctions.net/" + os.environ(FUNCTION_NAME)
+    # Add Headers
+    headers = {(}'Content-Type':'application/json'}
+    # Add Relative parameters
+    data = {'child_thread':BucketName, 'start_date': AuditStartTime}
+    # Make Call
+    res = requests.post(function_url, json=data, headers=headers)
+
 
 def Child(BucketName, AuditStartTime):
     # Child process searched StackDriver Audit for a specific bucket and publishes to pub/sub
     AuditResults = query_auditlogs(BucketName, AuditStartTime)
 
+    # Check the size of the queue and
+
     # Itterate over events and push to pub/sub queue
     for aEvent in AuditResults:
         add_to_pubsub(aEvent)
-    return True
 
 def add_to_pubsub(EventDetails):
     return True
