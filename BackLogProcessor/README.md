@@ -27,8 +27,8 @@ This cloud function is designed to review the audit logs and capture file upload
    * Spawn one function per bucket with parameter of child_thread = thread bucket name, and StartDate
 
 
-# Environmental Variables
-`gcs_buckets` = Array of buckets to gather info on. If left blank default to all buckets. Used when filtering logs
+# Parameters Variables
+`filtered_gcs_buckets` = Array of buckets to gather info on. If left blank default to all buckets. Used when filtering logs
 `start_date` = Sets the start date to review logs newer than this date / time. Default is all history
 `child_thread` = Bucket name to search for
 
